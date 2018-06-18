@@ -20,16 +20,6 @@ namespace Comtele.Sdk.Services
         }
 
         public ServiceResult<List<ReplyReportResource>> GetReport(DateTime startDate, DateTime endDate, string sender)
-        {            
-            return GetReportAsync(startDate, endDate, sender).Result;
-        }
-
-        public Task<ServiceResult<List<ReplyReportResource>>> GetReportAsync(DateTime startDate, DateTime endDate)
-        {
-            return GetReportAsync(startDate, endDate, null);
-        }
-
-        public async Task<ServiceResult<List<ReplyReportResource>>> GetReportAsync(DateTime startDate, DateTime endDate, string sender)
         {
             var client = new RestClient(ENDPOINT_ADDRESS);
             var request = new RestRequest("replyreporting", Method.GET);
@@ -39,8 +29,18 @@ namespace Comtele.Sdk.Services
             request.AddQueryParameter("endDate", $"{endDate:yyyy-MM-dd HH:mm:ss}");
             request.AddQueryParameter("sender", sender);
 
-            var response = await client.ExecuteTaskAsync<ServiceResult<List<ReplyReportResource>>>(request);
+            var response = client.Execute<ServiceResult<List<ReplyReportResource>>>(request);
             return response.Data;
+        }
+
+        public Task<ServiceResult<List<ReplyReportResource>>> GetReportAsync(DateTime startDate, DateTime endDate)
+        {
+            return GetReportAsync(startDate, endDate, null);
+        }
+
+        public async Task<ServiceResult<List<ReplyReportResource>>> GetReportAsync(DateTime startDate, DateTime endDate, string sender)
+        {
+            return await Task.Run(() => GetReport(startDate, endDate, sender));   
         }
     }
 }

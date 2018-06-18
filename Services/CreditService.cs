@@ -16,63 +16,58 @@ namespace Comtele.Sdk.Services
 
         public ServiceResult<object> AddCredits(string username, int amount)
         {
-            return AddCreditsAsync(username, amount).Result;
-        }
-
-        public async Task<ServiceResult<object>> AddCreditsAsync(string username, int amount)
-        {
             var client = new RestClient(ENDPOINT_ADDRESS);
             var request = new RestRequest("credits", Method.PUT);
 
             request.AddHeader("auth-key", ApiKey);
             request.AddQueryParameter("id", username);
             request.AddQueryParameter("amount", amount.ToString());
-            var response = await client.ExecuteTaskAsync<ServiceResult<object>>(request);
+            var response = client.Execute<ServiceResult<object>>(request);
 
             return response.Data;
         }
 
-        public int GetCredits(string username)
+        public async Task<ServiceResult<object>> AddCreditsAsync(string username, int amount)
         {
-            return GetCreditsAsync(username).Result;
+            return await Task.Run(() => AddCredits(username, amount));
         }
 
-        public async Task<int> GetCreditsAsync(string username)
+        public int GetCredits(string username)
         {
             var client = new RestClient(ENDPOINT_ADDRESS);
             var request = new RestRequest("credits", Method.GET);
 
             request.AddHeader("auth-key", ApiKey);
             request.AddQueryParameter("id", username);
-            var response = await client.ExecuteTaskAsync<ServiceResult<string>>(request);
+            var response = client.Execute<ServiceResult<string>>(request);
 
             int.TryParse(response.Data.Object, out int credits);
             return credits;
         }
 
-        public int GetMyCredits()
+        public async Task<int> GetCreditsAsync(string username)
         {
-            return GetMyCreditsAsync().Result;
+            return await Task.Run(() => GetCredits(username));
         }
 
-        public async Task<int> GetMyCreditsAsync()
+        public int GetMyCredits()
         {
             var client = new RestClient(ENDPOINT_ADDRESS);
             var request = new RestRequest("credits", Method.GET);
 
             request.AddHeader("auth-key", ApiKey);
-            var response = await client.ExecuteTaskAsync<ServiceResult<string>>(request);
+            var response = client.Execute<ServiceResult<string>>(request);
 
             int.TryParse(response.Data.Object, out int credits);
             return credits;
         }
 
-        public ServiceResult<List<CreditHistoryResource>> GetHistory(string username)
+        public async Task<int> GetMyCreditsAsync()
         {
-            return GetHistoryAsync(username).Result;
+            return await Task.Run(() => GetMyCredits());
         }
 
-        public async Task<ServiceResult<List<CreditHistoryResource>>> GetHistoryAsync(string username)
+        public ServiceResult<List<CreditHistoryResource>> GetHistory(string username)
         {
             var client = new RestClient(ENDPOINT_ADDRESS);
             var request = new RestRequest("balancehistory", Method.GET);
@@ -80,8 +75,13 @@ namespace Comtele.Sdk.Services
             request.AddHeader("auth-key", ApiKey);
             request.AddQueryParameter("id", username);
 
-            var response = await client.ExecuteTaskAsync<ServiceResult<List<CreditHistoryResource>>>(request);
+            var response = client.Execute<ServiceResult<List<CreditHistoryResource>>>(request);
             return response.Data;
+        }
+
+        public async Task<ServiceResult<List<CreditHistoryResource>>> GetHistoryAsync(string username)
+        {
+            return await Task.Run(() => GetHistory(username));
         }
     }
 }

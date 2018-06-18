@@ -16,11 +16,6 @@ namespace Comtele.Sdk.Services
 
         public ServiceResult<object> Send(string sender, string content, params string[] receivers)
         {
-            return SendAsync(sender, content, receivers).Result;
-        }
-
-        public async Task<ServiceResult<object>> SendAsync(string sender, string content, params string[] receivers)
-        {
             var restClient = new RestClient(ENDPOINT_ADDRESS);
             var restRequest = new RestRequest("send", Method.POST);
 
@@ -32,17 +27,17 @@ namespace Comtele.Sdk.Services
                 receivers = string.Join(",", receivers)
             });
 
-            var restResponse = await restClient.ExecuteTaskAsync<ServiceResult<object>>(restRequest);
+            var restResponse = restClient.Execute<ServiceResult<object>>(restRequest);
 
             return restResponse.Data;
         }
 
-        public ServiceResult<object> Schedule(string sender, string content, DateTime scheduleDate, params string[] receivers)
+        public async Task<ServiceResult<object>> SendAsync(string sender, string content, params string[] receivers)
         {
-            return ScheduleAsync(sender, content, scheduleDate, receivers).Result;
+            return await Task.Run(() => Send(sender, content, receivers));
         }
 
-        public async Task<ServiceResult<object>> ScheduleAsync(string sender, string content, DateTime scheduleDate, params string[] receivers)
+        public ServiceResult<object> Schedule(string sender, string content, DateTime scheduleDate, params string[] receivers)
         {
             var restClient = new RestClient(ENDPOINT_ADDRESS);
             var restRequest = new RestRequest("schedule", Method.POST);
@@ -56,17 +51,17 @@ namespace Comtele.Sdk.Services
                 scheduleDate = $"{scheduleDate:yyyy-MM-dd HH:mm:ss}"
             });
 
-            var restResponse = await restClient.ExecuteTaskAsync<ServiceResult<object>>(restRequest);
+            var restResponse = restClient.Execute<ServiceResult<object>>(restRequest);
 
             return restResponse.Data;
         }
 
-        public ServiceResult<List<DetailedReportResource>> GetDetailedReport(DateTime startDate, DateTime endDate, DeliveryStatus deliveryStatus)
+        public async Task<ServiceResult<object>> ScheduleAsync(string sender, string content, DateTime scheduleDate, params string[] receivers)
         {
-            return GetDetailedReportAsync(startDate, endDate, deliveryStatus).Result;
+            return await Task.Run(() => Schedule(sender, content, scheduleDate, receivers));
         }
 
-        public async Task<ServiceResult<List<DetailedReportResource>>> GetDetailedReportAsync(DateTime startDate, DateTime endDate, DeliveryStatus deliveryStatus)
+        public ServiceResult<List<DetailedReportResource>> GetDetailedReport(DateTime startDate, DateTime endDate, DeliveryStatus deliveryStatus)
         {
             var client = new RestClient(ENDPOINT_ADDRESS);
             var request = new RestRequest("detailedreporting", Method.GET);
@@ -78,17 +73,17 @@ namespace Comtele.Sdk.Services
             var deliveryStatusAsString = DeliveryStatusToString(deliveryStatus);
             request.AddQueryParameter("delivered", deliveryStatusAsString);
 
-            var response = await client.ExecuteTaskAsync<ServiceResult<List<DetailedReportResource>>>(request);
+            var response = client.Execute<ServiceResult<List<DetailedReportResource>>>(request);
             return response.Data;
         }
 
-        public ServiceResult<List<ConsolidatedReportResource>> GetConsolidatedReport(DateTime startDate, DateTime endDate, ReportGroupType groupType)
+        public async Task<ServiceResult<List<DetailedReportResource>>> GetDetailedReportAsync(DateTime startDate, DateTime endDate, DeliveryStatus deliveryStatus)
         {
-            return GetConsolidatedReportAsync(startDate, endDate, groupType).Result;
+            return await Task.Run(() => GetDetailedReport(startDate, endDate, deliveryStatus));
         }
 
-        public async Task<ServiceResult<List<ConsolidatedReportResource>>> GetConsolidatedReportAsync(DateTime startDate, DateTime endDate, ReportGroupType groupType)
-        {
+        public ServiceResult<List<ConsolidatedReportResource>> GetConsolidatedReport(DateTime startDate, DateTime endDate, ReportGroupType groupType)
+        {            
             var client = new RestClient(ENDPOINT_ADDRESS);
             var request = new RestRequest("consolidatedreporting", Method.GET);
 
@@ -99,9 +94,14 @@ namespace Comtele.Sdk.Services
             var groupTypeAsString = ReportGroupTypeToString(groupType);
             request.AddQueryParameter("group", groupTypeAsString);
 
-            var response = await client.ExecuteTaskAsync<ServiceResult<List<ConsolidatedReportResource>>>(request);
-            
+            var response = client.Execute<ServiceResult<List<ConsolidatedReportResource>>>(request);
+
             return response.Data;
+        }
+
+        public async Task<ServiceResult<List<ConsolidatedReportResource>>> GetConsolidatedReportAsync(DateTime startDate, DateTime endDate, ReportGroupType groupType)
+        {
+            return await Task.Run(() => GetConsolidatedReport(startDate, endDate, groupType));
         }
 
         private string DeliveryStatusToString(DeliveryStatus deliveryStatus)

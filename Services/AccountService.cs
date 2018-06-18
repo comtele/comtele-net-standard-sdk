@@ -16,36 +16,36 @@ namespace Comtele.Sdk.Services
         { }
 
         public AccountDetailResource GetAccountByUsername(string username)
-        {
-            return GetAccountByUsernameAsync(username).Result;
-        }
-
-        public async Task<AccountDetailResource> GetAccountByUsernameAsync(string username)
-        {
+        {            
             var client = new RestClient(ENDPOINT_ADDRESS);
             var request = new RestRequest("accounts", Method.GET);
 
             request.AddHeader("auth-key", ApiKey);
             request.AddQueryParameter("id", username);
 
-            var response = await client.ExecuteTaskAsync<ServiceResult<List<AccountDetailResource>>>(request);
+            var response = client.Execute<ServiceResult<List<AccountDetailResource>>>(request);
             return response.Data?.Object?.FirstOrDefault();
         }
 
-        public ServiceResult<List<AccountDetailResource>> GetAllAccounts()
+        public async Task<AccountDetailResource> GetAccountByUsernameAsync(string username)
         {
-            return GetAllAccountsAsync().Result;
+            return await Task.Run(() => GetAccountByUsername(username));
+        }
+
+        public ServiceResult<List<AccountDetailResource>> GetAllAccounts()
+        {            
+            var client = new RestClient(ENDPOINT_ADDRESS);
+            var request = new RestRequest("accounts", Method.GET);
+
+            request.AddHeader("auth-key", ApiKey);
+
+            var response = client.Execute<ServiceResult<List<AccountDetailResource>>>(request);
+            return response.Data;
         }
 
         public async Task<ServiceResult<List<AccountDetailResource>>> GetAllAccountsAsync()
         {
-            var client = new RestClient(ENDPOINT_ADDRESS);
-            var request = new RestRequest("accounts", Method.GET);
-
-            request.AddHeader("auth-key", ApiKey);            
-
-            var response = await client.ExecuteTaskAsync<ServiceResult<List<AccountDetailResource>>>(request);
-            return response.Data;
+            return await Task.Run(() => GetAllAccounts());
         }
     }
 }
