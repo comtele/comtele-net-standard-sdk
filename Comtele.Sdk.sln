@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comtele.Sdk", "Comtele.Sdk.csproj", "{474F800E-FF9E-4429-9679-8BE6F73EB337}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comtele.Sdk.TestingApp", "..\Comtele.Sdk.TestingApp\Comtele.Sdk.TestingApp.csproj", "{901B83A1-8A5B-464B-9982-BF3C6B941C34}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{474F800E-FF9E-4429-9679-8BE6F73EB337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{474F800E-FF9E-4429-9679-8BE6F73EB337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{474F800E-FF9E-4429-9679-8BE6F73EB337}.Release|Any CPU.Build.0 = Release|Any CPU
-		{901B83A1-8A5B-464B-9982-BF3C6B941C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{901B83A1-8A5B-464B-9982-BF3C6B941C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{901B83A1-8A5B-464B-9982-BF3C6B941C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{901B83A1-8A5B-464B-9982-BF3C6B941C34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
