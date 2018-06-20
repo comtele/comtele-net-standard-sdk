@@ -13,10 +13,10 @@
     <Company>Comtele</Company>
     <Product>Comtele SDK</Product>
     <Description>SDK para envio de mensagens de texto usando a plataforma Comtele</Description>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>telephony, SMS, video, phone, voice, wireless, api, comtele, REST</PackageTags>
-    <PackageReleaseNotes>Melhorias no gerenciamento de métodos async/await.</PackageReleaseNotes>
+    <PackageReleaseNotes>Adicionado gerenciamento de blacklist.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
