@@ -13,10 +13,10 @@
     <Company>Comtele</Company>
     <Product>Comtele SDK</Product>
     <Description>SDK para envio de mensagens de texto usando a plataforma Comtele</Description>
-    <Version>1.1.4</Version>
+    <Version>1.1.5</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>telephony, SMS, video, phone, voice, wireless, api, comtele, REST</PackageTags>
-    <PackageReleaseNotes>Adicionado gerenciamento de contatos e de envio de tokens para validação de números</PackageReleaseNotes>
+    <PackageReleaseNotes>Adicionado envio por grupo de contatos.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

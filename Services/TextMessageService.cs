@@ -10,9 +10,7 @@ namespace Comtele.Sdk.Services
 {
     public class TextMessageService : ServiceBase, ITextMessageService
     {
-        public TextMessageService(string apiKey)
-            : base(apiKey)
-        { }
+        public TextMessageService(string apiKey) : base(apiKey) { }
 
         public ServiceResult<object> Send(string sender, string content, params string[] receivers)
         {
@@ -83,7 +81,7 @@ namespace Comtele.Sdk.Services
         }
 
         public ServiceResult<List<ConsolidatedReportResource>> GetConsolidatedReport(DateTime startDate, DateTime endDate, ReportGroupType groupType)
-        {            
+        {
             var client = new RestClient(ENDPOINT_ADDRESS);
             var request = new RestRequest("consolidatedreporting", Method.GET);
 
