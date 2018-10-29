@@ -13,14 +13,14 @@
     <Company>Comtele</Company>
     <Product>Comtele SDK</Product>
     <Description>SDK para envio de mensagens de texto usando a plataforma Comtele</Description>
-    <Version>1.1.5</Version>
+    <Version>1.1.6</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>telephony, SMS, video, phone, voice, wireless, api, comtele, REST</PackageTags>
-    <PackageReleaseNotes>Adicionado envio por grupo de contatos.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade da versão da dependência RestSharp.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RestSharp" Version="106.2.2" />
+    <PackageReference Include="RestSharp" Version="106.5.4" />
   </ItemGroup>
 
 </Project>
