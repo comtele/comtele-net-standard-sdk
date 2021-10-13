@@ -13,7 +13,7 @@
     <Company>Comtele</Company>
     <Product>Comtele SDK</Product>
     <Description>SDK para envio de mensagens de texto usando a plataforma Comtele</Description>
-    <Version>1.1.6</Version>
+    <Version>1.2.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>telephony, SMS, video, phone, voice, wireless, api, comtele, REST</PackageTags>
     <PackageReleaseNotes>Upgrade da versão da dependência RestSharp.</PackageReleaseNotes>
