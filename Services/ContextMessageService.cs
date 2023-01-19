@@ -13,7 +13,7 @@ namespace Comtele.Sdk.Services
             : base(apiKey)
         { }
 
-        public ServiceResult<object> Send(string sender, string contextRuleName, string forContent, params string[] receivers)
+        public ServiceResult<object> Send(string sender, string contextRuleName, string forceContent, params string[] receivers)
         {
             var restClient = new RestClient(ENDPOINT_ADDRESS);
             var restRequest = new RestRequest("sendcontextmessage", Method.POST);
@@ -23,7 +23,7 @@ namespace Comtele.Sdk.Services
             {
                 sender,
                 contextRuleName,
-                forContent,
+                forceContent,
                 receivers = string.Join(",", receivers)
             });
 
