@@ -13,7 +13,7 @@ namespace Comtele.Sdk.Services
             : base(apiKey)
         { }
 
-        public ServiceResult<object> Send(string sender, string contextRuleName, params string[] receivers)
+        public ServiceResult<object> Send(string sender, string contextRuleName, string forContent, params string[] receivers)
         {
             var restClient = new RestClient(ENDPOINT_ADDRESS);
             var restRequest = new RestRequest("sendcontextmessage", Method.POST);
@@ -23,6 +23,7 @@ namespace Comtele.Sdk.Services
             {
                 sender,
                 contextRuleName,
+                forContent,
                 receivers = string.Join(",", receivers)
             });
 
@@ -31,12 +32,12 @@ namespace Comtele.Sdk.Services
             return restResponse.Data;
         }
 
-        public async Task<ServiceResult<object>> SendAsync(string sender, string contextRuleName, params string[] receivers)
+        public async Task<ServiceResult<object>> SendAsync(string sender, string contextRuleName, string forceContent, params string[] receivers)
         {
-            return await Task.Run(() => Send(sender, contextRuleName, receivers));
+            return await Task.Run(() => Send(sender, contextRuleName, forceContent, receivers));
         }
 
-        public ServiceResult<object> Schedule(string sender, string contextRuleName, DateTime scheduleDate, params string[] receivers)
+        public ServiceResult<object> Schedule(string sender, string contextRuleName, string forceContent, DateTime scheduleDate, params string[] receivers)
         {
             var restClient = new RestClient(ENDPOINT_ADDRESS);
             var restRequest = new RestRequest("schedulecontextmessage", Method.POST);
@@ -46,6 +47,7 @@ namespace Comtele.Sdk.Services
             {
                 sender,
                 contextRuleName,
+                forceContent,
                 scheduleDate = $"{scheduleDate:yyyy-MM-dd HH:mm:ss}",
                 receivers = string.Join(",", receivers)
             });
@@ -55,9 +57,9 @@ namespace Comtele.Sdk.Services
             return restResponse.Data;
         }
 
-        public async Task<ServiceResult<object>> ScheduleAsync(string sender, string contextRuleName, DateTime scheduleDate, params string[] receivers)
+        public async Task<ServiceResult<object>> ScheduleAsync(string sender, string contextRuleName, string forceContent, DateTime scheduleDate, params string[] receivers)
         {
-            return await Task.Run(() => Schedule(sender, contextRuleName, scheduleDate, receivers));
+            return await Task.Run(() => Schedule(sender, contextRuleName, forceContent, scheduleDate, receivers));
         }
 
         public ServiceResult<List<ContextReportResource>> GetReport(DateTime startDate, DateTime endDate)

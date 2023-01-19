@@ -8,11 +8,11 @@ namespace Comtele.Sdk.Core.Services
 {
     public interface IContextMessageService
     {
-        ServiceResult<object> Send(string sender, string contextRuleName, params string[] receivers);
-        Task<ServiceResult<object>> SendAsync(string sender, string contextRuleName, params string[] receivers);
+        ServiceResult<object> Send(string sender, string contextRuleName, string forceContent, params string[] receivers);
+        Task<ServiceResult<object>> SendAsync(string sender, string contextRuleName, string forceContent, params string[] receivers);
 
-        ServiceResult<object> Schedule(string sender, string contextRuleName, DateTime scheduleDate, params string[] receivers);
-        Task<ServiceResult<object>> ScheduleAsync(string sender, string contextRuleName, DateTime scheduleDate, params string[] receivers);
+        ServiceResult<object> Schedule(string sender, string contextRuleName, string forceContent, DateTime scheduleDate, params string[] receivers);
+        Task<ServiceResult<object>> ScheduleAsync(string sender, string contextRuleName, string forceContent, DateTime scheduleDate, params string[] receivers);
 
         ServiceResult<List<ContextReportResource>> GetReport(DateTime startDate, DateTime endDate);
         ServiceResult<List<ContextReportResource>> GetReport(DateTime startDate, DateTime endDate, string sender);
